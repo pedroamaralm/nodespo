@@ -25,5 +25,5 @@ jobs:
         GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       run: |
         gcloud auth configure-docker us-central1-docker.pkg.dev
-        docker build --build-arg CLIENT_ID=${{ secrets.CLIENT_ID }} CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} REDIRECT_URI=${{ secrets.REDIRECT_URI }}  -t us-central1-docker.pkg.dev/$GOOGLE_PROJECT/demo/nginx:latest .
+        docker build --build-arg CLIENT_ID=${{ secrets.CLIENT_ID }} --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} --build-arg REDIRECT_URI=${{ secrets.REDIRECT_URI }}  -t us-central1-docker.pkg.dev/$GOOGLE_PROJECT/demo/nginx:latest .
         docker push us-central1-docker.pkg.dev/$GOOGLE_PROJECT/demo/nginx:latest
