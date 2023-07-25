@@ -1,28 +1,19 @@
-# Use a imagem base do Node.js
-FROM node:14
+FROM node:18
 
-# Defina o diretório de trabalho dentro do contêiner
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-ARG CLIENT_ID
-ARG CLIENT_SECRET
-ARG REDIRECT_URI
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-ENV CLIENT_ID=$CLIENT_ID
-ENV CLIENT_SECRET=$CLIENT_SECRET
-ENV REDIRECT_URI=$REDIRECT_URI
-
-RUN npm install express axios querystring dotenv
-
-# Copie os arquivos do projeto para o diretório de trabalho
-COPY package.json package-lock.json /app/
 RUN npm install
+# If you are building your code for production
+# RUN npm ci --omit=dev
 
-# Copie o restante dos arquivos do projeto
-COPY . /app
+# Bundle app source
+COPY . .
 
-# Exponha a porta em que o servidor Node.js está ouvindo (PORT 8888)
-EXPOSE 8888
-
-# Inicie o servidor Node.js
-CMD ["node", "app.js"]
+EXPOSE 8080
+CMD [ "node", "server.js" ]
