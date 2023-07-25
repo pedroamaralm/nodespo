@@ -4,9 +4,13 @@ FROM node:14
 # Defina o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-ARG CLIENT_ID=${{ secrets.CLIENT_ID }}
-ARG CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
-ARG REDIRECT_URI=${{ secrets.REDIRECT_URI }}
+ARG CLIENT_ID
+ARG CLIENT_SECRET
+ARG REDIRECT_URI
+
+ENV CLIENT_ID=$CLIENT_ID
+ENV CLIENT_SECRET=$CLIENT_SECRET
+ENV REDIRECT_URI=$REDIRECT_URI
 
 RUN npm install express axios querystring dotenv
 
