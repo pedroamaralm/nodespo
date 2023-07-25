@@ -1,4 +1,4 @@
-name: Deploy Nginx
+name: Build&Deploy
 
 on:
   push:
@@ -18,6 +18,7 @@ jobs:
       with:
         project_id: ${{ secrets.GOOGLE_PROJECT }}
         service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        install_components: 'gke-gcloud-auth-plugin'
         export_default_credentials: true
 
     - name: build and push the docker image
@@ -27,3 +28,10 @@ jobs:
         gcloud auth configure-docker us-central1-docker.pkg.dev
         docker build --build-arg CLIENT_ID=${{ secrets.CLIENT_ID }} --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} --build-arg REDIRECT_URI=${{ secrets.REDIRECT_URI }} -t us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/node-spotify:latest .
         docker push us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/node-spotify:latest
+    - name: deploy to gke
+      env:
+        GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
+      run: |
+        gcloud container clusters get-credentials projet-final --region us-central1
+        sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" resources.yaml
+        kubectl apply -f resources.yaml
