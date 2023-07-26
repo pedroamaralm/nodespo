@@ -26,12 +26,19 @@ jobs:
         GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       run: |
         gcloud auth configure-docker us-central1-docker.pkg.dev
-        docker build -t us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/todo-app:latest .
-        docker push us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/todo-app:latest
-    - name: deploy to gke
+        docker build -t us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/todo-app:$GITHUB_SHA .
+        docker push us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/todo-app:$GITHUB_SHA
+
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    - name: configure kubectl
       env:
         GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       run: |
         gcloud container clusters get-credentials projeto-final --region us-central1
-        sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" resources.yaml
-        kubectl apply -f resources.yaml
+    
+    - name: Deploy to GKE Using Helm
+      run: |
+        helm upgrade --instal todo-app todo-app/ --values todo-app/values.yaml
