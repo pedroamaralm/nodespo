@@ -26,8 +26,8 @@ jobs:
         GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
       run: |
         gcloud auth configure-docker us-central1-docker.pkg.dev
-        docker build --build-arg CLIENT_ID=${{ secrets.CLIENT_ID }} --build-arg CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} --build-arg REDIRECT_URI=${{ secrets.REDIRECT_URI }} -t us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/node-spotify:latest .
-        docker push us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/node-spotify:latest
+        docker build -t us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/todo-app:latest .
+        docker push us-central1-docker.pkg.dev/$GOOGLE_PROJECT/node-app/todo-app:latest
     - name: deploy to gke
       env:
         GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
