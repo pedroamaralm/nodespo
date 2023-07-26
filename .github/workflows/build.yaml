@@ -44,4 +44,4 @@ jobs:
         ls -l $GITHUB_WORKSPACE/todo-app/
         cat $GITHUB_WORKSPACE/todo-app/values.yaml
         echo "##################################"
-        helm upgrade --install -f $GITHUB_WORKSPACE/todo-app/values.yaml todo-app $GITHUB_WORKSPACE/todoapp/
+        helm upgrade --install -f $GITHUB_WORKSPACE/todo-app/values.yaml todo-app $GITHUB_WORKSPACE/todoapp
