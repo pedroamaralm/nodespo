@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: us-central1-docker.pkg.dev/projetinho-da-thais/node-app/todo-app:latest
+  repository: us-central1-docker.pkg.dev/projetinho-da-thais/node-app/todo-app
   tag: latest
   pullPolicy: IfNotPresent
 
