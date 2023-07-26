@@ -42,6 +42,6 @@ jobs:
     - name: Deploy to GKE Using Helm
       run: |
         ls -l
-        ls $GITHUB_REPOSITORY/todoapp
-        cat $GITHUB_REPOSITORY/todo-app/values.yaml
-        helm upgrade --install --values $GITHUB_REPOSITORY/todo-app/values.yaml todo-app $GITHUB_REPOSITORY/todoapp
+        ls ./todoapp/
+        cat ./todo-app/values.yaml
+        helm upgrade --install --values ./todo-app/values.yaml todo-app ./todoapp
