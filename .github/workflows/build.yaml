@@ -43,4 +43,4 @@ jobs:
       run: |
         ls -l $GITHUB_WORKSPACE/todo-app/
         helm package $GITHUB_WORKSPACE/todo-app/
-        helm upgrade --install  todo-app $GITHUB_WORKSPACE/todo-app-0.1.0.tgz -f $GITHUB_WORKSPACE/todo-app/values.yaml
+        helm upgrade --install  todo-app $GITHUB_WORKSPACE/todo-app-0.1.0.tgz -f $GITHUB_WORKSPACE/todo-app/values.yaml -n app

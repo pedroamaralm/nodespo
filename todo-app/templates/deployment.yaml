@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "todo-app.fullname" . }}
-  namespace: app
   labels:
     {{- include "todo-app.labels" . | nindent 4 }}
 spec:
